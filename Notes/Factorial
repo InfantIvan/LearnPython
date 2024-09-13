@@ -1,0 +1,74 @@
+
+
+```python
+def factorial(n):
+    """
+    Calculates the factorial of a non-negative integer.
+
+    Args:
+        n: The integer for which to calculate the factorial.
+
+    Returns:
+        The factorial of n, or None if n is negative.
+    """
+
+    if n < 0:
+        print("Factorial is not defined for negative numbers.")
+        return None
+    elif n == 0:
+        return 1
+    else:
+        result = 1
+        for i in range(1, n + 1):
+            result *= i 
+        return result
+
+# Get input from the user
+num = int(input("Enter a non-negative integer: "))
+
+# Calculate and print the factorial
+factorial_result = factorial(num)
+if factorial_result is not None:
+    print(f"The factorial of {num} is {factorial_result}")
+```
+
+**Explanation of Concepts**
+
+1. **Function Definition:**
+   - `def factorial(n):`: This line defines a function named `factorial` that takes an integer `n` as input. Functions are reusable blocks of code that perform specific tasks.
+
+2. **Control Flow - Conditionals:**
+   - `if n < 0:`: This `if` statement checks if the input `n` is negative. If true, it prints a message and returns `None`, indicating an invalid input.
+   - `elif n == 0:`: This `elif` (else if) statement checks if `n` is zero. If true, it returns 1, as the factorial of 0 is 1.
+   - `else:`: This `else` block handles the case where `n` is positive.
+
+3. **Variables:**
+   - `result`: This variable is initialized to 1 and will store the accumulating product during the factorial calculation.
+
+4. **Control Flow - Loops:**
+   - `for i in range(1, n + 1):`: This `for` loop iterates from 1 up to and including `n`. In each iteration, the loop variable `i` takes on the next value in the range.
+
+5. **Calculation within the Loop:**
+   - `result *= i`: This line multiplies the current value of `result` by `i` and stores the result back in `result`. This effectively accumulates the product of numbers from 1 to `n`.
+
+6. **Return Value:**
+   - `return result`: After the loop completes, the function returns the final value of `result`, which is the factorial of `n`.
+
+7. **User Input:**
+   - `num = int(input("Enter a non-negative integer: "))`: This line prompts the user to enter an integer and converts the input string to an integer using `int()`.
+
+8. **Function Call and Output:**
+   - `factorial_result = factorial(num)`: The `factorial` function is called with the user's input `num`, and the returned value is stored in `factorial_result`.
+   - `if factorial_result is not None:`: This checks if the function returned a valid result (not `None`).
+   - `print(f"The factorial of {num} is {factorial_result}")`: If the result is valid, it's printed using an f-string for formatted output.
+
+**Key Points:**
+
+- **Control Flow:** The program uses conditionals (`if`, `elif`, `else`) to handle different input scenarios and loops (`for`) to perform repetitive calculations.
+- **Functions:** The `factorial` function encapsulates the logic for calculating factorials, making the code more organized and reusable.
+- **User Interaction:** The program takes input from the user, making it interactive.
+- **Error Handling:** It includes basic error handling to deal with invalid input (negative numbers). 
+
+This example demonstrates how control flow and loops are fundamental building blocks for creating dynamic and interactive Python programs.
+
+Feel free to ask if you have any specific questions or want to explore other programming concepts! 

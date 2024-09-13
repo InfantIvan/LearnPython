@@ -1,0 +1,133 @@
+All right, let's enhance the banking system simulation by incorporating a `Customer` class and provide a detailed example demonstrating its interaction with the existing `Account` and `Bank` classes.
+
+**File 1: `customer.py`**
+
+```python
+class Customer:
+    def __init__(self, customer_id, name, contact_info):
+        self._customer_details = (customer_id, name, contact_info)
+        self._accounts = {}  # Dictionary to store accounts, key: account_number, value: Account object
+
+    def get_details(self):
+        return self._customer_details
+
+    def add_account(self, account):
+        account_number = account.get_details()[0]
+        if account_number in self._accounts:
+            raise ValueError("Account number already associated with this customer!")
+        self._accounts[account_number] = account
+
+    def get_account(self, account_number):
+        if account_number not in self._accounts:
+            raise ValueError("Account not found for this customer!")
+        return self._accounts[account_number]
+
+    def get_all_accounts(self):
+        return list(self._accounts.values())
+```
+
+**File 2: `account.py` (remains the same)**
+
+```python
+# ... (Account class code from the previous response)
+```
+
+**File 3: `bank.py`**
+
+```python
+from account import Account
+from customer import Customer
+
+class Bank:
+    def __init__(self):
+        self._customers = {}  # Dictionary to store customers, key: customer_id, value: Customer object
+        self._accounts = {}  # Dictionary to store accounts, key: account_number, value: Account object
+
+    def add_customer(self, customer_id, name, contact_info):
+        if customer_id in self._customers:
+            raise ValueError("Customer ID already exists!")
+        new_customer = Customer(customer_id, name, contact_info)
+        self._customers[customer_id] = new_customer
+
+    def get_customer(self, customer_id):
+        if customer_id not in self._customers:
+            raise ValueError("Customer not found!")
+        return self._customers[customer_id]
+
+    def create_account(self, customer_id, account_number, initial_balance=0, account_type="Savings"):
+        if account_number in self._accounts:
+            raise ValueError("Account number already exists!")
+        customer = self.get_customer(customer_id)
+        new_account = Account(account_number, customer.get_details()[1], initial_balance, account_type)
+        self._accounts[account_number] = new_account
+        customer.add_account(new_account)
+
+    def get_account(self, account_number):
+        if account_number not in self._accounts:
+            raise ValueError("Account not found!")
+        return self._accounts[account_number]
+
+    def generate_customer_summary(self, customer_id):
+        customer = self.get_customer(customer_id)
+        details = customer.get_details()
+        accounts = customer.get_all_accounts()
+
+        print(f"Customer Summary for {details[1]} (Customer ID: {details[0]}):")
+        print(f"  Contact Info: {details[2]}")
+        print("\nAccounts:")
+        for account in accounts:
+            account_details = account.get_details()
+            print(f"  Account #{account_details[0]} ({account_details[3]}): Balance: {account_details[2]}")
+```
+
+**File 4: `main.py`**
+
+```python
+from bank import Bank
+
+my_bank = Bank()
+
+# Add customers
+my_bank.add_customer("C1", "Alice", "alice@example.com")
+my_bank.add_customer("C2", "Bob", "bob@example.com")
+
+# Create accounts for customers
+my_bank.create_account("C1", "12345", 1000)
+my_bank.create_account("C2", "67890", 5000, "Checking")
+
+# Perform transactions (same as before)
+# ...
+
+# Generate customer summaries
+my_bank.generate_customer_summary("C1")
+my_bank.generate_customer_summary("C2")
+```
+
+**Explanation**
+
+- `customer.py`:
+    - `Customer` class:
+        - Stores customer details as a tuple (`_customer_details`).
+        - Maintains a dictionary of associated accounts (`_accounts`).
+        - Provides methods for getting details, adding an account, getting an account by number, and getting all accounts.
+
+- `bank.py`:
+    - `Bank` class:
+        - Now stores both customers and accounts in dictionaries.
+        - `add_customer`: Adds a new customer.
+        - `get_customer`: Retrieves a customer by ID.
+        - `create_account`: Creates an account, associates it with the customer, and adds it to the bank's account list.
+        - `generate_customer_summary`: Prints customer details and a summary of their accounts.
+
+- `main.py`:
+    - Demonstrates adding customers, creating accounts for them, and generating customer summaries.
+
+**Key Enhancements**
+
+- **`Customer` Class:** Introduces a `Customer` class to model customer information and their associated accounts.
+- **Customer-Account Relationship:** Establishes a relationship between customers and their accounts, allowing for more realistic banking operations.
+- **Customer Summary:** The `Bank` class now provides a method to generate a summary of a customer's information and their accounts.
+
+This expanded example showcases a more comprehensive utilization of tuples within a banking domain, incorporating customer management and demonstrating the interplay between multiple classes to model a more sophisticated system.
+
+Feel free to ask if you have any other scenarios or modifications you'd like to explore within this banking simulation!
